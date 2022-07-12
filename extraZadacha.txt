@@ -1,12 +1,11 @@
-CREATE DATABASE my_database;
 
 create table cars (
-	id SERIAL PRIMARY KEY,
-	brand VARCHAR(50) NOT NULL,
-	model VARCHAR(50) NOT NULL,
-	year_of_issue int NOT NULL,
-	price DECIMAL(8,2) NOT NULL ,
-	color VARCHAR(50) NOT NULL
+                      id SERIAL PRIMARY KEY,
+                      brand VARCHAR(50) NOT NULL,
+                      model VARCHAR(50) NOT NULL,
+                      year_of_issue int NOT NULL,
+                      price DECIMAL(8,2) NOT NULL ,
+                      color VARCHAR(50) NOT NULL
 );
 insert into cars (id, brand, model, year_of_issue, price, color) values (1, 'Chevrolet', 'Express 2500', 1998, 34650.37, 'Khaki');
 insert into cars (id, brand, model, year_of_issue, price, color) values (2, 'GMC', 'Sierra 3500', 2011, 78888.61, 'Maroon');
@@ -408,3 +407,58 @@ insert into cars (id, brand, model, year_of_issue, price, color) values (397, 'S
 insert into cars (id, brand, model, year_of_issue, price, color) values (398, 'Maserati', '228', 1990, 63824.76, 'Violet');
 insert into cars (id, brand, model, year_of_issue, price, color) values (399, 'Alfa Romeo', 'Spider', 1992, 53247.18, 'Fuscia');
 insert into cars (id, brand, model, year_of_issue, price, color) values (400, 'Aston Martin', 'DBS', 2009, 87573.8, 'Orange');
+
+--1 Car's brand, model and price
+SELECT brand,model,price FROM cars ;
+
+--2 Count of cars
+SELECT count(id)FROM cars;
+
+--3 'Hyundai' brand
+SELECT *FROM cars WHERE brand LIKE 'Hyundai';
+SELECT *FROM cars WHERE brand = 'Hyundai';
+
+--4 Red and Blue cars
+SELECT *FROM cars WHERE color IN ('Red','Blue');
+
+--5 Cars where issued year between 2000 and 2010
+SELECT *FROM cars WHERE year_of_issue BETWEEN 2000 AND 2010;
+
+--6 Car brand 'Chevrolet'
+SELECT *FROM cars WHERE brand = 'Chevrolet';
+
+--7 AVG cars issued of year
+SELECT avg(year_of_issue)FROM cars;
+
+--8 Cars brand Audi, Toyota, Kia and Ford
+SELECT *FROM cars WHERE brand IN ('Audi','Toyota','Kia','Ford');
+
+--9 Car models start with 'T'
+SELECT *FROM cars WHERE model LIKE 'T%';
+
+--10 Car models end with 'e'
+SELECT *FROM cars WHERE model LIKE '%e';
+
+--11 Brands contain 5 symbol
+SELECT *, LENGTH(brand) AS length FROM cars WHERE LENGTH(brand)=6;
+
+--12 All amounts where car’s brand is Mercedes-Benz
+SELECT sum(price)FROM cars WHERE brand = 'Mercedes-Benz';
+
+--13 The most expensive car & the cheapest car
+SELECT MAX(price),MIN(price)FROM cars;
+
+--14 Car brand not 'Toyota'
+SELECT *FROM cars WHERE brand NOT LIKE 'Toyota';
+
+--15 10 most expensive car
+SELECT * FROM cars ORDER BY price DESC LIMIT 10;
+
+--16 The newest cars between 5th to 15th
+SELECT *  FROM cars ORDER BY year_of_issue DESC LIMIT 10 OFFSET 5 ;
+
+--17 Car issued not between 1995 and 2005
+SELECT *FROM cars WHERE year_of_issue NOT BETWEEN 1995 AND 2005;
+
+--18 Display most cars in one color
+SELECT color,count(*)FROM cars GROUP BY color ORDER BY count(*) DESC ;
